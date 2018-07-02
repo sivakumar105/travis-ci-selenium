@@ -57,6 +57,7 @@ while value <= 1:
         break
     except Exception as e:
         print e, e.message
+        print driver.page_source
         value += 0.1
 driver.close()
 
