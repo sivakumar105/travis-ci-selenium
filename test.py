@@ -42,11 +42,11 @@ driver.find_element_by_xpath('//*[@title="Logout"]')
 # # Now moving to edit profile
 driver.find_element_by_xpath('//*[@title="Edit Profile"]').click()
 
-value = 0.5
+value = 0
 while value <= 1:
     driver.execute_script("window.scrollTo(0, {}*document.body.scrollHeight);".format(value))
     try:
-        element = WebDriverWait(driver, 30).until(
+        element = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.XPATH, '//input[@id="attachCV"]'))
         )
         driver.find_element_by_xpath('//input[@id="attachCV"]').send_keys(
@@ -57,7 +57,7 @@ while value <= 1:
         break
     except Exception as e:
         print e, e.message
-        print driver.page_source
+        # print driver.page_source
         value += 0.1
 driver.close()
 
