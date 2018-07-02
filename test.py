@@ -1,5 +1,3 @@
-# Dependencies
-import datetime
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -59,18 +57,16 @@ while value <= 1:
         updated_on = driver.find_element_by_css_selector('span.updateOn').text
         if updated_on:
             import re
-            date_up = re.search('Uploaded on (.*)', updated_on).group(1)
-            print "Resume uploaded on :{}".format(date_up)
-            upload_date = datetime.datetime.strptime(date_up, '%b %d, %Y').date()
+            upload_date = re.search('Uploaded on (.*)', updated_on).group(1)
+            print "Resume uploaded on :{}".format(upload_date)
         break
     except Exception as e:
-        print e, e.message
+        print e.message
         # print driver.page_source
         value += 0.1
 
-# comparing upload dates
-current_date = datetime.date.today()
-assert upload_date == current_date, "Resume Not uploaded"
+# checking upload dates
+assert upload_date, "Resume Not uploaded"
 driver.close()
 
 
