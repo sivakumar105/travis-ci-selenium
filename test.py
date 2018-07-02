@@ -60,6 +60,7 @@ while value <= 1:
         if updated_on:
             import re
             date_up = re.search('Uploaded on (.*)', updated_on).group(1)
+            print "Resume uploaded on :{}".format(date_up)
             upload_date = datetime.datetime.strptime(date_up, '%b %d, %Y').date()
         break
     except Exception as e:
@@ -69,7 +70,7 @@ while value <= 1:
 
 # comparing upload dates
 current_date = datetime.date.today()
-assert upload_date == current_date, "Resume upload Successfully"
+assert upload_date == current_date, "Resume Not uploaded"
 driver.close()
 
 
