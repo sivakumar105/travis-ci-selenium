@@ -1,4 +1,5 @@
 # Dependencies
+import datetime
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -16,8 +17,9 @@ skip_and_continue_ele = (By.XPATH, '//input[@value="Skip and Continue"]')
 
 # driver Initialization
 binary_location = r"/usr/local/bin/chromedriver"
+upload_date = None
 driver = webdriver.Chrome(binary_location)
-driver.implicitly_wait(20)
+driver.implicitly_wait(30)
 # driver.maximize_window()
 driver.get('https://login.naukri.com')
 
@@ -42,7 +44,7 @@ driver.find_element_by_xpath('//*[@title="Logout"]')
 # # Now moving to edit profile
 driver.find_element_by_xpath('//*[@title="Edit Profile"]').click()
 
-value = 0
+value = 0.4
 while value <= 1:
     driver.execute_script("window.scrollTo(0, {}*document.body.scrollHeight);".format(value))
     try:
@@ -54,11 +56,20 @@ while value <= 1:
         print 'Done Successfully'
         import time
         time.sleep(10)
+        updated_on = driver.find_element_by_css_selector('span.updateOn').text
+        if updated_on:
+            import re
+            date_up = re.search('Uploaded on (.*)', updated_on).group(1)
+            upload_date = datetime.datetime.strptime(date_up, '%b %d, %Y').date()
         break
     except Exception as e:
         print e, e.message
         # print driver.page_source
         value += 0.1
+
+# comparing upload dates
+current_date = datetime.date.today()
+assert upload_date == current_date, "Resume upload Successfully"
 driver.close()
 
 
