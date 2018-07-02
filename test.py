@@ -42,7 +42,7 @@ driver.find_element_by_xpath('//*[@title="Logout"]')
 # # Now moving to edit profile
 driver.find_element_by_xpath('//*[@title="Edit Profile"]').click()
 
-value = 0.6
+value = 0.5
 while value <= 1:
     driver.execute_script("window.scrollTo(0, {}*document.body.scrollHeight);".format(value))
     try:
@@ -52,9 +52,11 @@ while value <= 1:
         driver.find_element_by_xpath('//input[@id="attachCV"]').send_keys(
             os.path.join(os.getcwd(), "Profile.docx"))
         print 'Done Successfully'
+        import time
+        time.sleep(10)
         break
     except Exception as e:
-        print e
+        print e, e.message
         value += 0.1
 driver.close()
 
