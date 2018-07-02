@@ -18,7 +18,7 @@ skip_and_continue_ele = (By.XPATH, '//input[@value="Skip and Continue"]')
 binary_location = r"/usr/local/bin/chromedriver"
 driver = webdriver.Chrome(binary_location)
 driver.implicitly_wait(20)
-driver.maximize_window()
+# driver.maximize_window()
 driver.get('https://login.naukri.com')
 
 # Login to naukri
@@ -56,5 +56,6 @@ while value <= 1:
     except Exception as e:
         print e
         value += 0.1
+driver.close()
 
 
